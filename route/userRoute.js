@@ -70,12 +70,14 @@ router.get("/verify", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log("Before update:", user.isVerified);
     user.isVerified = true;
     await user.save();
+    console.log("After update:", user.isVerified);
 
     res.status(200).json({ message: "Email verified successfully" });
   } catch (error) {
-    console.log(error.message);
+    console.error("Verification error:", error.message);
     res.status(400).json({ message: "Invalid or expired token" });
   }
 });
